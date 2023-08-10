@@ -1,0 +1,6 @@
+Automation is a rapidly growing field and easily accessible unmanned aerial vehicles (UAVs) are often viewed as the next frontier. They preform exceptionally well when a simple task must be completed at various locations with minimal ground access between them. 
+Examples include collecting images or delivering payloads. However, each application has its own constraints that must be satisfied.
+
+For instance, we can consider a set of targets that each produces data at some constant rate. The targets have limited memory and the UAV must periodically visit targets to retrieve their data before it is overwritten. Additionally, the UAV starts at a depot and has limited fuel. The only way to refuel is to return to the depot.
+
+Planning a route requires careful evaluation of both time and distance. Not every problem instance solvable. The UAV may not be able to make it to a certain target and back without running out of fuel. It may also not be able to reach a target before the end of the time window regardless of the path taken. Solutions are infeasible in these cases and must be accounted for when generating problem instances since they will not all be solvable.

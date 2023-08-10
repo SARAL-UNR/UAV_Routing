@@ -1,0 +1,27 @@
+To solve the proposed UAV routing problem, we must to solve a variation of the traveling salesman problem (TSP). The TSP and nearly all of its variations are part of the NP-hard complexity class. As the number of target increases, it becomes significantly difficult to find the best solution and eventually it becomes computationally impossible. Since solutions are often needed for many real-world applications, heuristics must therefore be implemented to find a solution at the cost of optimization. This sacrifice means that the most optimal solution will likely not be found but that a solution can be found and that it is relatively optimal in comparison to other solutions. The requirement of heuristics is why TSPs are inherently difficult to solve and their importance in everyday life only emphasizes the need for faster algorithms that can yield better optimizations.
+
+The specific TSP variation we are looking at is called the time-windowed traveling salesman problem (TWTSP). The difference between the TSP and TWTSP is that each target will now have its own specified time range in which UAV must visit. The TWTSP does not represent the full extend of the problem we are trying to solve but it provides a start. We must begin by looking at how the additional time constraint changes the TSP. Once of the most significant differences between the TSP and the TWTSP is that every possible orderings of targets is a valid solution for the TSP but this may not be true for the TWTSP. By adding time-windows, we introduce the possibility for a tour of the targets to not reach a target within its required time window. A tour that fails to reach a target during the allotted time is therefore not a valid solution. Consequently, if every possible tour of a specific TWTSP instance fails to be a valid solution, the problem instance is infeasible and thus has no solution. Therefore,  We can start by evaluating the situations in which there does not exist any route in which all the targets can be reached within their respective time windows.  We will then gradually introduce more parameters and will expand the problem until it better reflects the real-world problem we are trying to solve.
+
+The Electric Vehicle-Routing Problem with Time Windows and Recharging Stations (2014)
+multiple vehicles
+fuel drain only during travel
+cargo
+tabu search
+
+Vehicle Routing Problem with Time Windows for Reducing Fuel Consumption (2012)
+MILP formulation of minimal-fuel VRPTW 
+cargo
+non uniform fuel consumption
+tabu search
+
+A new truck-routing approach for reducing fuel consumption and pollutants emission (2011)
+Minimal-distance formulation MILP
+speed
+
+The multi-period vehicle routing problem with refueling decisions (2020)
+gas stations and bad visuals
+cargo
+triple summation MILP
+different gas prices
+
+The multi-period vehicle routing problem with refueling decisions ()

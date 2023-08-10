@@ -1,0 +1,9 @@
+To validate the speed of the heuristic algorithm we generated problem instances which were solved by both algorithms.
+
+\subsection{Generating Problems Instances}
+
+As previously mentioned each problem instance is composed of a set of variables which is shown in the first section of Table $\ref{tab:vars}$. The number of targets and their values of $w_i$ were chosen such that the number of dummy targets after the problem transformation would be a multiple of ten. $w_i$ Each vertex was assigned a random $x$ and $y$ position ranging between zero and one. The distances between vertices is the Euclidean distance. Finally, the fuel capacity of the UAV ($C$) was chosen to be 2.5 since this acted as a balanced between problem instances that are unsolvable and instances that require no refueling.
+
+\subsection{Solving Problems Instances}
+
+When solving instances of the problem, a problem was first generated then timed and solved by a Python 3.10 implementation of each algorithm. All problems were solved on a Microsoft Surface Book 2 with an Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz 2.11 GHz processor with 16.0 GB of RAM running on Windows 11 Pro version 22H2. The number of targets was varied between 5, 10, 15, and 20 and the result are shown below:

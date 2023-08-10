@@ -1,0 +1,52 @@
+\subsection{Problem Statement}
+
+We will define the problem as follows: consider an unmanned areal vehicle (UAV) that must visit a set of $n$ targets called $S$. The UAV must start and end it's tour at the depot $d$ which is not an element of $S$ and the UAV can visit the depot as many times as required. Therefore, the set of all vertices is $V=S\cup\{ d\}$ and it assumed that they all must lie on an Euclidean place. 
+
+Any given target $i$ has a buffer of $p$ bits and creates new data at a rate of $q_i$. After the time $w_i=p/q_i$, the buffer is cleared. Each target must be visited exactly once before the data is cleared. 
+
+The UAV has a limited fuel capacity of $C$ and can instantly recharge by returning to the depot.
+
+\subsection{Problem Transformation}
+
+To solve the problem, each target is divided into dummy targets such that each target can only be visited once. The set of all dummy targets is $S'$. The depot is also divided into two parts. The first part is the starting and ending dummy depots: $0$ and $N+1$. The second part is dummy depots used for refueling $F$. Each vertex in $F$ can on be visited once. The Set of all dummy vertices is $V'=S'\cup F\cup\{0,n'+1\}$.
+
+For each dummy target $j$ of the original target $i$, there is a start time $t^s_j$ and an end time $t^e_j$ such that $t^s_j+w_i=t^e_j$. The UAV must be present at some time during or after $t^s_j$ and during or before $t^e_j$. The UAV can arrive before $t^s_j$ in which it hovers over $j$ until $t^s_j$. 
+
+The goal of the problem is to find a $TOUR=(d,v_1,...,v_p,d)$ where $v_1,...,v_p\in V$ such that the tour UAV can visit every element of $S'$ exactly once. As such, for each dummy target $i$ there is an arrival time $t^a_i$, and the amount of remaining fuel upon arrival $y_i$.
+
+% and a departure time $t^d_i$ such that $t^a_i\le t^d_i$.
+
+The distance between vertices is assumed to be proportional to the time it takes to move from one to another. As such the time it takes to travel from vertices $i\in V'$ to another vertex $j\in V'$ is defined as $f_{ij}\in\mathbb{R}^+$ 
+
+%such that $f_{ij}=t^a_j-t^d_i$.
+
+\begin{table}[htbp]
+\caption{}
+\begin{center}
+\begin{tabular}{l l}
+Variable & Definition \\
+\hline
+$S$      & The set of all targets the UAV must visit  \\
+$d$      & The depot where the UAV starts and ends \\
+$n$      & The number of targets: $n=\|S\|$ \\
+$V$      & The set of all targets and the depot: $V=S\cup\{d\}$ \\
+$f_{ij}$ & The travel time from vertices $i$ to $j$ \\
+$p$      & The bit storage capacity of every target \\
+$q_i$    & The rate in which the target $i$ generates new data \\
+$w_i$    & The length of the time windows for vertex $i$: $w_i=p/q_i$ \\
+$C$      & The fuel capacity of the UAV \\
+\hline
+$S'$     & The set of all dummy targets: $S'=\{1,2,...,n\}$ \\
+$n'$     & The number of dummy targets: $n'=\|S'\|$ \\
+$F$      & The set of all refueling dummy depots. $F={}$\\
+$V'$     & The set of all dummy vertices: $V'=S'\cup F\cup\{0,n'+1\}$ \\
+$t^s_i$  & The start time of the dummy target $i$ \\
+$t^e_i$  & The ending time of the dummy target $i$ \\
+\hline
+$t^a_i$  & The arrival time of the dummy target $i$ \\
+$t^d_i$  & The departure time of the dummy target $i$ \\
+\hline
+\end{tabular}
+\label{tab:vars}
+\end{center}
+\end{table}

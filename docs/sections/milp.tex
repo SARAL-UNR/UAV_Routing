@@ -1,0 +1,89 @@
+\noindent Minimize:
+%
+\begin{equation} \label{eqn:milp1} % 1
+    \sum_{i,j \in V'} f_{ij} x_{ij}
+\end{equation}
+%
+\noindent Subject to: 
+%
+\begin{flalign} \label{eqn:milp2} % 2 with depot support
+    \quad \sum_{j \in V'} x_{ij} = 1
+    \quad \forall \ i \in V'\cup\{0\} &&
+\end{flalign}
+%
+\begin{flalign} \label{eqn:milp3} % 3
+    \quad \sum_{j \in V'} x_{ij} \le 1
+    \quad \forall \ i \in F &&
+\end{flalign}
+%   
+\begin{flalign} \label{eqn:milp4} % 4
+    \quad \sum_{i \in V'} x_{ji} - \sum_{i \in V'} x_{ij} = 0
+    \quad \forall \ j \in S'\cup F &&
+\end{flalign}
+%
+\begin{flalign} \label{eqn:milp5} % 7
+    \quad t^s_i \le t^a_i \le t^e_i 
+    \quad \forall \ i \in V' &&
+\end{flalign}
+%
+\begin{flalign} \label{eqn:milp6} % 5
+    \quad t^a_i + f_{ij} x_{ij} - t^e_d (1 - x_{ij}) \le t^a_j
+    \quad \forall \ i,j \in V' &&
+\end{flalign}
+%
+\begin{flalign} \label{eqn:milp7}
+    \quad 0 \le y_j \le C
+    \quad \forall \ j \in V' &&
+\end{flalign}
+%
+\begin{multline} \label{eqn:milp8} % 10
+    y_j \le y_i - (t^a_j - t^a_i) + C (1 - x_{ij})
+    \\ \forall \ i \in S', \ \forall \ j \in V'
+\end{multline}
+%
+\begin{multline} \label{eqn:milp9} % 11
+    y_j \le C - (t^a_j - t^a_i) + C (1 - x_{ij})
+    \\ \forall \ i \in V'\backslash S', \ \forall \ j \in S'
+\end{multline}
+%
+\begin{flalign} \label{eqn:milp10} % 12
+    \quad x_{ij} \in \{ 0, 1\} 
+    \quad \forall \ i,j \in V' &&
+\end{flalign}
+%
+\begin{flalign} \label{eqn:milp11} % depot/fuel to depot/fuel
+    \quad x_{ij} = 0 
+    \quad \forall \ i,j \in V'\backslash S' &&
+\end{flalign}
+%
+\begin{flalign} \label{eqn:milp12}
+    \quad x_{ii} = 0 
+    \quad \forall \ i \in V' &&
+\end{flalign}
+%
+\begin{flalign} \label{eqn:milp13} % Instant Subtours
+    \quad x_{ij} + x_{ji} \le 1
+    \quad \forall \ i,j \in V' &&
+\end{flalign}
+
+
+% Depots
+% unequal inbound vs outbound
+
+% Targets
+% does not refuel
+% can visit sequentially
+% non constant start and endtimes
+
+% Fuel
+% Optional visits
+
+Consider the problem and the variables as previously defined. $x$ is a directed adjacency matrix of the directed graph created from the vertices $V'$. As such, $x_{ij}$ is a Boolean value that represents if there is a direct path from $i$ to $j$ as defined in \eqref{eqn:milp10}. For every vertex $i$, $t^a_i$ is the time of arrival and $y_i$ is the remaining fuel upon arrival which at most $C$ and at least zero shown by \eqref{eqn:milp7}. 
+
+Equations \eqref{eqn:milp2} and \eqref{eqn:milp3} respectively state that every dummy target and the starting depot has an outbound degree of one while every fuel has an outbound degree of zero or one. Additional, from equation \eqref{eqn:milp4}, the fuel depot and the dummy targets must have an equal inbound and outbound degree.  
+
+Equation \eqref{eqn:milp5} constrains the arrival time from the start time to end time, inclusive. From equation \eqref{eqn:milp6}, the arrival time for all vertices is at least the previous arrival time plus the distance from the previous vertex.
+
+Equation \eqref{eqn:milp8} states That arriving at any vertex from a dummy target to a vertex, the remaining fuel is at most the remaining fuel at the dummy target minus the difference in arrivals times. In contrast, equation \eqref{eqn:milp9} states that when arriving at a target from the starting depot of a fuel depot, the remaining fuel on arrival is at most the fuel capacity minus the difference in arrivals times. 
+
+Equation \eqref{eqn:milp11} and \eqref{eqn:milp12} prevent single and double vertex sub-tours respectively. Finally, equation \eqref{eqn:milp13} States that edges cannot exist between any two dummy instances of the depot including refueling stops.

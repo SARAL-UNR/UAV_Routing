@@ -1,0 +1,46 @@
+
+\begin{algorithm}
+\caption{Construction Heuristic}\label{alg:heuristic}
+\begin{algorithmic}[1]
+
+\State Start with a tour that only contains the depot.
+% smallest g value, Unexplored verticies
+\State If the current target cannot visit every unvisited target, backtrack to the previous element in the tour.
+
+\State Add an edge from the current target to the target with the smallest $g$ value such that the resulting graph has not already been created by this step.
+
+\State If the remaining fuel on arrival is less than the cost to return to the depot, insert a refueling depot before the last element in the tour. If the tour is no longer valid, backtrack.
+
+\State Repeat the previous three steps until all targets are part of the tour.
+
+\State Add the depot onto the end of the tour.
+
+\end{algorithmic}
+\end{algorithm}
+
+\noindent When traveling from $i$ to $j$:
+\begin{align}
+    %
+    & t^a_j = \max(t^a_i + f_{ij}, t^s_j) \\
+    %
+    & y_j = y_i - (t^a_j - t^a_i) 
+    \quad \forall\ i \in S', \ \forall\ j \in V' \\
+    %
+    & y_j = C - (t^a_j - t^a_i)
+    \quad \forall\ i \in V'\backslash S' \ \forall\ j \in S'
+    %
+\end{align}
+
+\noindent The function $g(i,j)$ is the edge weight of $i\in V'$ to $j\in S'$. $w$ is the weightings of each parameter in $g$ and is unique for each solution.
+%
+\begin{equation}
+    g(i,j) =
+    w_1 t^e_j +
+    w_2 t^s_j +
+    w_3 f_{ij} +
+    w_4 f_{j0} +
+    w_5 t^a_j +
+    w_6 y_j
+\end{equation}
+
+\noindent Each solution has a unique value of $w$ which is optimized through genetic evolution. Solutions with smaller tour lengths have a greater chance to pass on their values of $w$.

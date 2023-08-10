@@ -1,0 +1,62 @@
+\algnewcommand\Input{\item[\textbf{Input:}]}
+\algnewcommand\Output{\item[\textbf{Output:}]}
+
+To find a solution we take our set of targets $S$ and sort them into a sequence $S'$. The sequence is functions as a stack in which targets with larger $t^e$ values are higher on the stack. If there is a tie, $t^s$ is used as a tie breaker. If there is a further tie, order is random. Using $S'$ the construction algorithm is shown in Algorithm 1.
+
+\begin{algorithm}
+\caption{The \textit{Ordering} Algorithm}\label{alg:ordering}
+
+\begin{algorithmic}[1]
+\Input{A sorted sequence of targets $S'$}
+\Output{The sequence $TOUR$}
+
+\State $ (stack_n \gets S' )_{n\in V} $
+\State $ TOUR \gets \{d\} $
+\State $ i \gets d $
+
+% Loop untill the tour is full
+\While{$ \exists s\in S \textbf{ such that } s\notin TOUR $}
+
+    % Set j
+    \If{$ stack_i \text{ is not empty} $} \Comment{Backtrack $i$ if stack is empty}
+        \State $ j \gets \text{pop } stack_i $
+        \If{$ j \in TOUR \textbf{ or } t^d_i + f_{ij} \ge t^e_j $}
+            \State \textbf{continue} \Comment{Skips invalid targets for $j$}
+        \EndIf
+
+    % Set i
+    \Else
+        \State $ stack_i \gets S' $ \Comment{Reset stack}
+        \State pop $TOUR$
+        \State $ i \gets \text{peak } TOUR $
+        \State \textbf{continue} \Comment{Return to find a valid $j$}
+    \EndIf
+
+    % Arrival Time
+    \State $ t^a_j \gets t^d_i + f_{ij} $ \Comment{Calculate arrival time}
+
+    % Departure Time
+    \If{$ t^a_j < t^s_j $} 
+        \State $ t^d_j \gets t^s_j $ \Comment{Departure time is delayed due to early arrival}
+    \Else
+        \State $ t^d_j \gets t^a_j $ \Comment{Departure time is instant}
+    \EndIf
+
+    % Append Tour
+    \State push $j$ onto $TOUR$
+
+    % Update i
+    \State $ i \gets j $
+
+\EndWhile
+
+\State $ TOUR \text{ push } d $ \Comment{Return to depot}
+\State $ t^a_d \gets t^d_j + f_{ij} $ 
+\State \Return{$TOUR$} 
+
+\end{algorithmic}
+\end{algorithm}
+
+Algorithm \ref{alg:ordering} generates valid tours of the targets and if a problem instance has a solution, the algorithm is guaranteed to find a solution.However, since the algorithm terminates once a valid solution is found, the is no guarantee that the algorithm will find the most optimal solution. Therefore, the algorithm finds solutions in $O(n)$ for best case but will still exhaust all possibles for worst case and infeasible instances.
+
+
